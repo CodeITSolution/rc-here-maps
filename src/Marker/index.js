@@ -34,7 +34,7 @@ class Marker extends Component {
    * Get the dom marker html icon
    */
   getDomMarkerIcon = html => {
-    return new window.H.map.DomIcon(html);
+    return new H.map.DomIcon(html);
   };
 
   /**
@@ -47,7 +47,7 @@ class Marker extends Component {
       React.createElement('div', { className: 'rc-marker' }, children),
     );
     const icon = this.getDomMarkerIcon(htmlEl);
-    const marker = new window.H.map.DomMarker({ lat, lng }, { icon });
+    const marker = new H.map.DomMarker({ lat, lng }, { icon });
     marker.addEventListener('tap', this.props.onClick);
     marker.addEventListener('pointerenter', this.props.onMouseEnter);
     marker.addEventListener('pointerleave', this.props.onMouseLeave);
@@ -115,7 +115,7 @@ class Marker extends Component {
   onDragStart = e => {
     const { target } = e;
     const { behavior } = this.props;
-    if (target instanceof window.H.map.DomMarker) {
+    if (target instanceof H.map.DomMarker) {
       behavior.disable();
     }
   };

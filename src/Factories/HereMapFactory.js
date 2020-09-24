@@ -4,14 +4,14 @@ export default (appId, appCode, useHTTPS = true) => {
     appCode,
     useHTTPS,
     getPlatform: () => {
-      return new window.H.service.Platform({
+      return new H.service.Platform({
         app_id: appId,
         app_code: appCode,
         useHTTPS: useHTTPS,
       });
     },
     getHereMap: (container, mapType, options) => {
-      return new window.H.Map(container, mapType, options);
+      return new H.Map(container, mapType, options);
     },
   };
 };

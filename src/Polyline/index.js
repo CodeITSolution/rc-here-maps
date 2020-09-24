@@ -40,7 +40,7 @@ class Polyline extends Component {
   * Get the linestring geometry
   */
   getGeometry = () => {
-    return new window.H.geo.LineString(this.props.dataPoints, 'lat lng alt');
+    return new H.geo.LineString(this.props.dataPoints, 'lat lng alt');
   };
 
   /*
@@ -49,7 +49,7 @@ class Polyline extends Component {
   createPolyline = () => {
     const geometry = this.getGeometry();
     const { map, fillColor, strokeColor, lineWidth, miterLength, lineDash, lineDashOffset } = this.props;
-    this.polyline = new window.H.map.Polyline(geometry, {
+    this.polyline = new H.map.Polyline(geometry, {
       style: {
         strokeColor,
         lineWidth,

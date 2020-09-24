@@ -12,7 +12,37 @@ class Map extends Component {
     this.factory = HereMapFactory(props.appId, props.appCode, props.useHTTPS);
 
     // Produces the platform object
-    this.platform = this.factory.getPlatform();
+
+    const [,] = useLink(
+      'https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1526040296',
+      'map-styles',
+    );
+    const [coreLoaded] = useScript(
+      'https://js.api.here.com/v3/3.0/mapsjs-core.js',
+      'core',
+    );
+    const [serviceLoaded] = useScript(
+      'https://js.api.here.com/v3/3.0/mapsjs-service.js',
+      'service',
+    );
+    const [uiLoaded] = useScript(
+      'https://js.api.here.com/v3/3.0/mapsjs-ui.js',
+      'ui',
+    );
+    const [mapeventsLoaded] = useScript(
+      'https://js.api.here.com/v3/3.0/mapsjs-mapevents.js',
+      'mapevents',
+    );
+    this.platform = usePlatform(
+      {
+        app_code: appCode,
+        app_id: appId,
+        useHTTPS: secure === true,
+      },
+      coreLoaded && serviceLoaded && uiLoaded && mapeventsLoaded,
+    );
+
+    //this.platform = this.factory.getPlatform();
 
     this.state = {
       map: null,
@@ -37,7 +67,7 @@ class Map extends Component {
     const mapTypes = this.platform.createDefaultLayers();
     const element = ReactDOM.findDOMNode(this);
     const { zoom, center } = this.props;
-    const pixelRatio = window.devicePixelRatio || 1;
+    const pixelRatio = 1;
     const map = this.factory.getHereMap(element, mapTypes.normal.map, {
       zoom,
       center,
@@ -54,10 +84,10 @@ class Map extends Component {
       },
       () => {
         // Enabling zoom and drag events
-        const behaviour = new window.H.mapevents.Behavior(new window.H.mapevents.MapEvents(map));
+        const behaviour = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
         // This creates the UI controls
-        window.H.ui.UI.createDefault(map, mapTypes);
+        H.ui.UI.createDefault(map, mapTypes);
 
         // Send to parent the created map object
         this.props.onMapLoaded(map, behaviour, this.factory);
@@ -80,7 +110,7 @@ class Map extends Component {
 
   updateBounds = bounds => {
     if (isEmpty(bounds)) return;
-    const rect = new window.H.geo.Rect(bounds.north, bounds.south, bounds.east, bounds.west);
+    const rect = new H.geo.Rect(bounds.north, bounds.south, bounds.east, bounds.west);
     this.state.map.setViewBounds(rect);
   };
 

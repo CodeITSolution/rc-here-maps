@@ -31,7 +31,7 @@ class Rectangle extends Component {
    *  Get the rect object based on the bounds
    */
   getGeometry = bounds => {
-    return new window.H.geo.Rect(bounds.north, bounds.south, bounds.east, bounds.west);
+    return new H.geo.Rect(bounds.north, bounds.south, bounds.east, bounds.west);
   };
 
   /**
@@ -39,7 +39,7 @@ class Rectangle extends Component {
    */
   createRectangle = () => {
     const { map, fillColor, strokeColor, lineWidth, bounds } = this.props;
-    this.rectangle = new window.H.map.Rect(this.getGeometry(bounds), {
+    this.rectangle = new H.map.Rect(this.getGeometry(bounds), {
       style: {
         fillColor,
         strokeColor,

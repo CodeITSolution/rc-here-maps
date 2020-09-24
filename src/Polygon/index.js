@@ -31,7 +31,7 @@ class Polygon extends Component {
    * Get the polygon geometry
    */
   getGeometry = dataPoints => {
-    return new window.H.geo.Polygon(new window.H.geo.LineString(dataPoints, 'lat lng alt'));
+    return new H.geo.Polygon(new H.geo.LineString(dataPoints, 'lat lng alt'));
   };
 
   /**
@@ -40,7 +40,7 @@ class Polygon extends Component {
   createPolygon = () => {
     const { map, fillColor, strokeColor, lineWidth, dataPoints } = this.props;
     const geometry = this.getGeometry(dataPoints);
-    this.polygon = new window.H.map.Polygon(geometry, {
+    this.polygon = new H.map.Polygon(geometry, {
       style: {
         fillColor,
         strokeColor,
