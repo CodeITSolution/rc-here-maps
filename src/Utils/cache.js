@@ -61,9 +61,12 @@ export function onAllLoad(callback) {
   const promises = []
   const results = []
 
+  console.log('all loaded');
+
   loadedScripts.forEach((value) => {
     if (value.hasLoaded) {
       results.push(value)
+      console.log('loaded:', value);
     } else {
       promises.push(value.promise)
     }
