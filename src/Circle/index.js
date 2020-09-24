@@ -29,7 +29,7 @@ class Circle extends Component {
   */
   createCircle = () => {
     const { map, fillColor, strokeColor, lineWidth, center, radius } = this.props;
-    this.circle = new H.map.Circle(center, radius, {
+    this.circle = new window.H.map.Circle(center, radius, {
       style: {
         fillColor,
         strokeColor,

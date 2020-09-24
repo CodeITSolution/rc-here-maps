@@ -36,7 +36,7 @@ class PathFinder extends Component {
     if (this.path) map.removeObject(this.path);
 
     const { map, style } = this.props;
-    const strip = new H.geo.Strip();
+    const strip = new window.H.geo.Strip();
     const routeShape = route.shape;
 
     routeShape.forEach(function (point) {
@@ -44,7 +44,7 @@ class PathFinder extends Component {
       strip.pushLatLngAlt(parts[0], parts[1]);
     });
 
-    const path = new H.map.Polyline(strip, { style });
+    const path = new window.H.map.Polyline(strip, { style });
   
     map.addObject(path);
     this.props.onPathCreated(path);

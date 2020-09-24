@@ -73,10 +73,10 @@ class Map extends Component {
       },
       () => {
         // Enabling zoom and drag events
-        const behaviour = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+        const behaviour = new window.H.mapevents.Behavior(new window.H.mapevents.MapEvents(map));
 
         // This creates the UI controls
-        H.ui.UI.createDefault(map, mapTypes);
+        window.H.ui.UI.createDefault(map, mapTypes);
 
         // Send to parent the created map object
         this.props.onMapLoaded(map, behaviour, this.factory);
@@ -99,7 +99,7 @@ class Map extends Component {
 
   updateBounds = bounds => {
     if (isEmpty(bounds)) return;
-    const rect = new H.geo.Rect(bounds.north, bounds.south, bounds.east, bounds.west);
+    const rect = new window.H.geo.Rect(bounds.north, bounds.south, bounds.east, bounds.west);
     this.state.map.setViewBounds(rect);
   };
 
