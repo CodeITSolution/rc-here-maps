@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import HereMapFactory from './../Factories/HereMapFactory';
 import { isEqual, isEmpty } from './../Utils';
-import { usePlatform } from '../hooks/use-platform';
-import { useScript } from '../hooks/use-script';
-import { useLink } from '../hooks/use-link';
+import getLink from './../Utils/get-link'
+import getScriptMap from './../Utils/get-script-map'
+import cache from './../Utils/cache'
 
 class Map extends Component {
   constructor(props) {
@@ -15,37 +15,7 @@ class Map extends Component {
     this.factory = HereMapFactory(props.appId, props.appCode, props.useHTTPS);
 
     // Produces the platform object
-
-    const [,] = useLink(
-      'https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1526040296',
-      'map-styles',
-    );
-    const [coreLoaded] = useScript(
-      'https://js.api.here.com/v3/3.0/mapsjs-core.js',
-      'core',
-    );
-    const [serviceLoaded] = useScript(
-      'https://js.api.here.com/v3/3.0/mapsjs-service.js',
-      'service',
-    );
-    const [uiLoaded] = useScript(
-      'https://js.api.here.com/v3/3.0/mapsjs-ui.js',
-      'ui',
-    );
-    const [mapeventsLoaded] = useScript(
-      'https://js.api.here.com/v3/3.0/mapsjs-mapevents.js',
-      'mapevents',
-    );
-    this.platform = usePlatform(
-      {
-        app_code: appCode,
-        app_id: appId,
-        useHTTPS: secure === true,
-      },
-      coreLoaded && serviceLoaded && uiLoaded && mapeventsLoaded,
-    );
-
-    //this.platform = this.factory.getPlatform();
+    this.platform = this.factory.getPlatform();
 
     this.state = {
       map: null,
@@ -67,17 +37,33 @@ class Map extends Component {
   }
 
   componentDidMount() {
-    const mapTypes = this.platform.createDefaultLayers();
-    const element = ReactDOM.findDOMNode(this);
-    const { zoom, center } = this.props;
-    const pixelRatio = 1;
-    const map = this.factory.getHereMap(element, mapTypes.normal.map, {
-      zoom,
-      center,
-      pixelRatio,
-    });
 
-    this.setMap(map, mapTypes);
+    cache(getScriptMap(props.useHTTPS === true))
+    const stylesheetUrl = `${
+      props.useHTTPS === true ? 'https:' : ''
+    }//js.api.here.com/v3/3.0/mapsjs-ui.css`
+    getLink(stylesheetUrl, 'HERE Maps UI')
+
+    onAllLoad(() => {
+
+      const mapTypes = this.platform.createDefaultLayers();
+      const element = ReactDOM.findDOMNode(this);
+      const { zoom, center } = this.props;
+      const pixelRatio = 1;
+      const map = this.factory.getHereMap(element, mapTypes.normal.map, {
+        zoom,
+        center,
+        pixelRatio,
+      });
+
+      if (window) {
+        window.addEventListener('resize', this.debouncedResizeMap);
+      }
+
+      this.setMap(map, mapTypes);
+    })
+
+    
   }
 
   setMap = (map, mapTypes) => {
