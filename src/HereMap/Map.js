@@ -11,12 +11,6 @@ class Map extends Component {
   constructor(props) {
     super(props);
 
-    // creates the factory
-    this.factory = HereMapFactory(props.appId, props.appCode, props.useHTTPS);
-
-    // Produces the platform object
-    this.platform = this.factory.getPlatform();
-
     this.state = {
       map: null,
     };
@@ -37,7 +31,7 @@ class Map extends Component {
   }
 
   componentDidMount() {
-
+  
     cache(getScriptMap(props.useHTTPS === true))
     const stylesheetUrl = `${
       props.useHTTPS === true ? 'https:' : ''
@@ -45,6 +39,12 @@ class Map extends Component {
     getLink(stylesheetUrl, 'HERE Maps UI')
 
     onAllLoad(() => {
+
+      // creates the factory
+      this.factory = HereMapFactory(props.appId, props.appCode, props.useHTTPS);
+
+      // Produces the platform object
+      this.platform = this.factory.getPlatform();
 
       const mapTypes = this.platform.createDefaultLayers();
       const element = ReactDOM.findDOMNode(this);
