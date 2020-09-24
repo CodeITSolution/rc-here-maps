@@ -32,16 +32,16 @@ class Map extends Component {
 
   componentDidMount() {
   
-    cache(getScriptMap(props.useHTTPS === true))
+    cache(getScriptMap(this.props.useHTTPS === true))
     const stylesheetUrl = `${
-      props.useHTTPS === true ? 'https:' : ''
+      this.props.useHTTPS === true ? 'https:' : ''
     }//js.api.here.com/v3/3.0/mapsjs-ui.css`
     getLink(stylesheetUrl, 'HERE Maps UI')
 
     onAllLoad(() => {
 
       // creates the factory
-      this.factory = HereMapFactory(props.appId, props.appCode, props.useHTTPS);
+      this.factory = HereMapFactory(this.props.appId, this.props.appCode, this.props.useHTTPS);
 
       // Produces the platform object
       this.platform = this.factory.getPlatform();
