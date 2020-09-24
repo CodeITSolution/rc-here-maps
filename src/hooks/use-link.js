@@ -1,8 +1,8 @@
 import React from 'react';
 
-const loadedLinks: Map<string, string> = new Map();
+const loadedLinks = new Map();
 
-export function useLink(url: string, name: string) {
+export function useLink(url, name) {
   const [state, setState] = React.useState({
     loaded: false,
     error: false,

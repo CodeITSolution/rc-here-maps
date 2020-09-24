@@ -1,13 +1,13 @@
 import React from 'react';
 
-export const cachedScripts: Map<string, string> = new Map();
+export const cachedScripts = new Map();
 
 /**
  *
  * @param src - script URL
  * @param name - name for cache pourposes
  */
-export function useScript(src: string, name: string) {
+export function useScript(src, name) {
   // Keeping track of script loaded and error state
   const [state, setState] = React.useState({
     loaded: false,

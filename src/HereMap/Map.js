@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import HereMapFactory from './../Factories/HereMapFactory';
 import { isEqual, isEmpty } from './../Utils';
+import { usePlatform } from '../hooks/use-platform';
+import { useScript } from '../hooks/use-script';
+import { useLink } from '../hooks/use-link';
 
 class Map extends Component {
   constructor(props) {
