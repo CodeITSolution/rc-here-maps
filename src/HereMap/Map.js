@@ -38,19 +38,19 @@ class Map extends Component {
     }//js.api.here.com/v3/3.0/mapsjs-ui.css`
     getLink(stylesheetUrl, 'HERE Maps UI')
 
-    const sprops = this.props;
+    const self = this;
 
     onAllLoad(() => {
 
       // creates the factory
-      this.factory = HereMapFactory(sprops.appId, sprops.appCode, sprops.useHTTPS);
+      this.factory = HereMapFactory(self.props.appId, self.props.appCode, self.props.useHTTPS);
 
       // Produces the platform object
       this.platform = this.factory.getPlatform();
 
       const mapTypes = this.platform.createDefaultLayers();
       const element = ReactDOM.findDOMNode(this);
-      const { zoom, center } = sprops;
+      const { zoom, center } = self.props;
       const pixelRatio = 1;
       const map = this.factory.getHereMap(element, mapTypes.normal.map, {
         zoom,
@@ -62,7 +62,7 @@ class Map extends Component {
       //   window.addEventListener('resize', this.debouncedResizeMap);
       // }
 
-      this.setMap(map, mapTypes);
+      self.setMap(map, mapTypes);
     })
 
     
