@@ -58,9 +58,9 @@ class Map extends Component {
         pixelRatio,
       });
 
-      if (window) {
-        window.addEventListener('resize', this.debouncedResizeMap);
-      }
+      // if (window) {
+      //   window.addEventListener('resize', this.debouncedResizeMap);
+      // }
 
       this.setMap(map, mapTypes);
     })
