@@ -5,7 +5,7 @@ import HereMapFactory from './../Factories/HereMapFactory';
 import { isEqual, isEmpty } from './../Utils';
 import getLink from './../Utils/get-link'
 import getScriptMap from './../Utils/get-script-map'
-import cache from './../Utils/cache'
+import cache, { onAllLoad } from './../Utils/cache'
 
 class Map extends Component {
   constructor(props) {
